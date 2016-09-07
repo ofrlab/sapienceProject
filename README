@@ -1,0 +1,47 @@
+##### sapienceProject #####
+
+Project consists of two functional tools:
+  1. autoCase
+  2. autoImage
+
+##### autoCase #####
+
+Tool sets up all of the necessary ZFS data sets to work a case.
+
+Tool does the following:
+  1.    Ask for case name
+  2.    Check if a case by that name already exists in the "Forensic_Cases" dataset
+  3.    Create a dataset below "Forensic_Cases."
+  3b.   Change owner to lab.
+  4.    Create an "Images" dataset below the case dataset
+  4b.   Change owner to lab.
+  5.    Set compression=on on the "Images" dataset.
+  6.    Set atime=off on the "Images" dataset.
+  7.    Create a "Nuix" dataset below "Forensic_Cases."
+  7b.   Change owner to lab.
+  8.    Create an "Exports" dataset below "Forensic_Cases."
+  8b.   Change owner to lab.
+  9.    Set compression=on on the "Exports" dataset.
+  10.   Create a "Reports" dataset below "Forensic_Cases."
+  10b.  Change owner to lab.
+  11.   Set compression=on on the "Reports" dataset.
+
+##### autoImage #####
+
+Tool safely images devices and takes zfs actions to secure image.
+
+Tool does the following:
+  1.    Ask for case name
+  2.    Check that case already exists.
+  3.    Ask for image name
+  4.    Check if images already exists.
+  5.    Ask for device to image.
+  6.    Check that device is not in use (by OS of ZFS pool).
+  7.    Create image named dataset below "Images" below case dataset.
+  7b.   Change owner to lab.
+  8.    Create dd directory
+  9.    Image using dc3dd (segmented).
+      a.  Image will be saved in the dd directory inside the image named dataset.
+      b.  Image log file will be saved in image named datatset.
+  10.   Sanpshot imaged named dataset (using date and time as name of snapshot).
+  11.   Set readonly=on on image named dataset.
